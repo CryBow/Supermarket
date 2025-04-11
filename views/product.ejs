@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title><%= product['Название_товара'] %></title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/product_style.css"> <!-- Подключаем стили для страницы товара -->
+</head>
+<body>
+  <header>
+    <button id="home-btn" class="nav-button">Главная страница</button>
+    <button id="catalog-btn" class="nav-button">Каталог товаров</button>
+    <button id="cart-btn" class="nav-button">Корзина</button>
+    <button id="checkout-btn" class="nav-button">Оформление заказа</button>
+    <button id="profile-btn" class="nav-button">Личный кабинет</button>
+    <button id="orders-btn" class="nav-button">История заказов</button>
+    <button id="stats-btn" class="nav-button">Статистика продаж</button>
+  </header>
+
+  <main>
+        <!-- Кнопка назад -->
+        <a href="/catalog" class="back-button">
+          &#8592; Назад
+        </a>
+    <h1>Информация о товаре</h1>
+    
+
+    
+    <!-- Карточка товара -->
+    <div class="product-card">
+      <img src="/<%= product['Изображение'] %>" alt="<%= product['Название_товара'] %>">
+      <div class="product-details">
+        <h1><%= product['Название_товара'] %></h1>
+        <p><strong>Категория:</strong> <%= product['Категория'] %></p>
+        <p><strong>Цена:</strong> <%= product['Цена'] %> ₽</p>
+        <p><strong>Описание:</strong> <%= product['Описание'] %></p>
+        <p><strong>Производитель:</strong> <%= product['Производитель'] %></p>
+        <p><strong>Единицы измерения:</strong> <%= product['Единицы_измерения'] %></p>
+      </div>
+    </div>
+  </main>
+
+  <footer></footer>
+  <script src="/app.js"></script> <!-- Подключаем общий скрипт -->
+</body>
+</html>

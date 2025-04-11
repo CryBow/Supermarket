@@ -1,0 +1,223 @@
+main {
+    padding: 40px;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0; /* Убираем отступы вокруг body */
+  }
+  h1 {
+    color: #394871;
+    text-align: center;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 карточек в строке */
+    gap: 15px; /* Расстояние между карточками */
+    padding: 0 20px; /* Отступы по краям контейнера */
+    width: 100%;
+    max-width: 2500px; /* Установим максимальную ширину, чтобы избежать огромных отступов */
+    margin: 0 auto; /* Центрируем контейнер по горизонтали */
+    box-sizing: border-box;
+    justify-content: center; /* Центрирование карточек по горизонтали */
+    align-items: center; /* Центрирование карточек по вертикали, если они не заполняют весь контейнер */
+  
+  }
+  
+  .product-card {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease;
+    height: 400px; /* Фиксированная высота карточки */
+    width: 280px; /* Фиксированная ширина карточки */
+    flex: 0 1 auto; /* Устанавливает фиксированный размер карточки */
+    margin: 0; /* Убираем отступы между карточками */
+  }
+  
+  .product-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .product-card h3,
+  .product-card p,
+  .product-card span {
+    margin: 8px 0;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .add-to-cart-btn {
+    margin-top: auto;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #394871;
+  }
+  
+  .add-to-cart-btn.loading::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.4);
+    animation: ripple 1s ease-out;
+  }
+
+ /* Основные стили для строки фильтров */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+/* Стили для поля поиска */
+#search-input {
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Стили для выпадающих списков */
+#sort-select, #category-select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Стили для кнопок */
+.apply-filters-btn, .reset-filters-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Кнопка "Применить фильтры" (зеленая) */
+.apply-filters-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.apply-filters-btn:hover {
+  background-color: #45a049;
+}
+
+/* Кнопка "Сбросить фильтры" (красная) */
+.reset-filters-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.reset-filters-btn:hover {
+  background-color: #e53935;
+}
+
+/* Респонсивность: на маленьких экранах выравниваем элементы по центру */
+@media (max-width: 768px) {
+  .filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  #search-input {
+    width: 100%;
+  }
+
+  #sort-select, #category-select {
+    width: 100%;
+  }
+}
+
+
+
+  
+  @keyframes ripple {
+    from { opacity: 1; }
+    to { opacity: 0; transform: scale(2); }
+  }
+  
+  /* Адаптивные стили для меньших экранов */
+
+  @media (max-width: 2100px) {
+    .product-grid {
+      grid-template-columns: repeat(5, 1fr); /* 4 карточки в строке */
+      padding: 0 15px;
+    }
+  }
+
+  @media (max-width: 1800px) {
+    .product-grid {
+      grid-template-columns: repeat(4, 1fr); /* 4 карточки в строке */
+      padding: 0 15px;
+    }
+  }
+  @media (max-width: 1450px) {
+    .product-grid {
+      grid-template-columns: repeat(3, 1fr); /* 3 карточки в строке */
+      padding: 0 15px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr); /* 2 карточки в строке */
+      padding: 0 15px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .product-grid {
+      grid-template-columns: 1fr; /* 1 карточка на строку */
+      padding: 0 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .product-grid {
+      justify-content: center; /* Центрируем карточки на мобильных */
+    }
+  }

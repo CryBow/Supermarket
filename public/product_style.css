@@ -1,0 +1,81 @@
+/* Кнопка "Назад" */
+.back-button {
+    display: inline-block;
+    position: relative; /* Используем relative для корректного позиционирования */
+    top: 2px; /* Отступ сверху от хедера */
+    left: 0; /* Прикрепляем кнопку к левому краю */
+    margin-bottom: 20px; /* Отступ снизу для отделения от заголовка */
+    background-color: #394871; /* Цвет фона */
+    border: 2px solid #394871; /* Рамка кнопки */
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    border-radius: 5px; /* Скругление углов */
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .back-button:hover {
+    background-color: #2b3e59; /* Цвет фона при наведении */
+    transform: scale(1.05); /* Немного увеличиваем кнопку при наведении */
+  }
+  
+  /* Основной стиль для карточки товара */
+  .product-card {
+    display: flex;
+    margin: 20px auto;
+    width: 80%; /* Уменьшаем размер карточки на 20% */
+    max-width: 900px; /* Ограничиваем максимальную ширину */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .product-card img {
+    width: 60%; /* Изображение занимает 60% ширины карточки */
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  
+  .product-details {
+    width: 40%; /* Текстовая часть карточки */
+    font-family: Arial, sans-serif;
+  }
+  
+  .product-details h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .product-details p {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  /* Стили для навигации в хедере */
+
+  
+  /* Стиль для основной секции с товаром */
+  main {
+    padding: 20px;
+    margin-top: 20px;
+  }
+  h1 {
+    color: #394871;
+    text-align: center;
+  }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  

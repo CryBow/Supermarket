@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная страница</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/main_style.css">
+</head>
+<body>
+  <header>
+    <button id="home-btn" class="nav-button">Главная страница</button>
+    <button id="catalog-btn" class="nav-button">Каталог товаров</button>
+    <button id="cart-btn" class="nav-button">Корзина</button>
+    <button id="checkout-btn" class="nav-button">Оформление заказа</button>
+    <button id="profile-btn" class="nav-button">Личный кабинет</button>
+    <button id="orders-btn" class="nav-button">История заказов</button>
+    <button id="stats-btn" class="nav-button">Статистика продаж</button>
+  </header>
+
+  <main>
+    <h1>Добро пожаловать в супермаркет "Восьмёрочка"</h1>
+
+    <div class="action-buttons">
+      <p>Ознакомьтесь с ассортиментом</p>
+      <form method="GET" action="/catalog">
+        <button id="explore-btn" type="submit">Открыть</button>
+      </form>
+    </div>
+
+    <div class="login-section">
+      <p>Войдите в личный кабинет для оформления заказов</p>
+      <form method="GET" action="/login">
+        <button id="login-btn" type="submit">Войти</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
