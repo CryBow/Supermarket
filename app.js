@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
+// const { Client } = require('pg');
 const { Client } = require('pg');
 const app = express();
 const PORT = 3000;
@@ -45,12 +46,46 @@ const connectionString = "postgresql://postgres:aUZhvJjOBbubjsawtzvWUpFztNRkyWUU
 //     rejectUnauthorized: false // Railway требует SSL, иначе ошибка подключения
 //   }
 // };
-const dbConfig = {
+
+
+// const dbConfig = {
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: {
+//     rejectUnauthorized: false // Railway требует SSL
+//   }
+// };
+
+// const dbConfig = {
+//   user: 'supermarket_tm9c_user',
+//   host: 'localhost',
+//   database: 'supermarket_tm9c',
+//   password: 'fJnYDizdX6xwyzBgPyELAhaT2tdaEh85',
+//   port: 5432,
+//   connectionString,
+//  ssl: {
+//     rejectUnauthorized: false // Railway требует SSL, иначе ошибка подключения
+//   }
+// };
+
+// const client = new Client(dbConfig);
+// client.connect()
+//     .then(() => console.log('Connected to PostgreSQL database'))
+//     .catch(err => console.error('Error connecting to PostgreSQL database', err));
+
+const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false // Railway требует SSL
+    rejectUnauthorized: false // Render требует SSL
   }
-};
+});
+client.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('Ошибка подключения к БД:', err);
+  } else {
+    console.log('Подключено к БД. Время:', res.rows[0]);
+  }
+});
+
 
 
 app.use((req, res, next) => {
@@ -61,10 +96,6 @@ app.use((req, res, next) => {
   next();
 });
 
-const client = new Client(dbConfig);
-client.connect()
-    .then(() => console.log('Connected to PostgreSQL database'))
-    .catch(err => console.error('Error connecting to PostgreSQL database', err));
 
 app.get('/', (req, res) => {
   console.log('Главная страница запрошена');
