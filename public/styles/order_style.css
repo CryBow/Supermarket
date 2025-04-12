@@ -1,0 +1,66 @@
+main {
+  padding: 20px;
+  margin-top: 0px;
+}
+
+h1 {
+  color: #394871;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#orders-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.order-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.order-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.order-summary p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  background-color: #394871;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 18px;
+}
+
+.back-btn:hover {
+  background-color: #2d365a;
+  transform: scale(1.05);
+}

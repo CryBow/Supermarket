@@ -31,6 +31,7 @@ h1 {
     margin: 20px auto;
     padding: 20px;
     transition: transform 0.2s;
+    color: #394871;
 }
 
 .checkout-item:hover {
@@ -53,11 +54,11 @@ h1 {
 
 #total-price {
     margin-right: 20px;
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 18px;
     white-space: nowrap;
     display: flex;
     align-items: center;
+    color: #394871;
 }
 
 

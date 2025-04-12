@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>История заказов</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/order_style.css">
 </head>
 <body>
   <header>
@@ -16,10 +17,14 @@
     <button id="stats-btn" class="nav-button">Статистика продаж</button>
   </header>
   <main>
+    <button id="back-btn" class="back-btn">Назад</button>
     <h1>История заказов</h1>
+    <div id="orders-container">
+    </div>
   </main>
   <footer></footer>
   <script src="/frontend.js"></script>
+  <script src="/order.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

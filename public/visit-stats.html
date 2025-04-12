@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Статистика посещений</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/visit_stats_style.css">
+</head>
+
+<body>
+  <header>
+    <button id="home-btn" class="nav-button">Главная страница</button>
+    <button id="catalog-btn" class="nav-button">Каталог товаров</button>
+    <button id="cart-btn" class="nav-button">Корзина</button>
+    <button id="checkout-btn" class="nav-button">Оформление заказа</button>
+    <button id="profile-btn" class="nav-button">Личный кабинет</button>
+    <button id="orders-btn" class="nav-button">История заказов</button>
+    <button id="stats-btn" class="nav-button">Статистика продаж</button>
+  </header>
+  <main>
+    <button id="back-btn" class="back-btn">Назад</button>
+    <h1>Статистика посещений</h1>
+    <table id="statsTable">
+      <thead>
+        <tr>
+          <th>Страница</th>
+          <th>Количество посещений</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+  <script>
+    fetch('/api/visit-stats')
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.querySelector('#statsTable tbody');
+        for (const url in data) {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${url}</td><td>${data[url]}</td>`;
+          tbody.appendChild(row);
+        }
+      })
+      .catch(err => {
+        console.error('Ошибка загрузки статистики:', err);
+      });
+
+    document.getElementById('back-btn').addEventListener('click', function () {
+      window.location.href = 'stats.html';
+    });
+  </script>
+  <script src="app.js"></script>
+  <script src="/frontend.js"></script>
+</body>
+
+</html>

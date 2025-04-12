@@ -17,7 +17,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .cart-item {
@@ -31,6 +31,7 @@ h1 {
   margin: 20px auto;
   padding: 20px;
   transition: transform 0.2s;
+  color: #394871;
 }
 
 .cart-item:hover {
@@ -53,15 +54,16 @@ h1 {
 
 #total-price {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin-top: 20px;
+  color: #394871;
 }
 
 .main-checkout-btn {
   display: block;
   margin: 30px auto;
   padding: 12px 24px;
-  background-color: #4CAF50;
+  background-color: #394871;
   color: white;
   border-radius: 8px;
   border: none;
@@ -70,7 +72,7 @@ h1 {
 }
 
 .main-checkout-btn:hover {
-  background-color: #45a049;
+  background-color: #325486;
 }
 
 .remove-btn {

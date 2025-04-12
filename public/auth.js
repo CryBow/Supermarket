@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
           }
           alert('Вы успешно зарегистрировались!');
-          window.location.href = 'form.html';
+          window.location.href = 'login.html';
         } catch (err) {
           console.error('Ошибка при регистрации:', err);
           alert('Ошибка при регистрации');

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Статистика продаж</title>
+  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="/styles/stats_style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <button id="home-btn" class="nav-button" >Главная страница</button>
+    <button id="catalog-btn" class="nav-button" >Каталог товаров</button>
+    <button id="cart-btn" class="nav-button" >Корзина</button>
+    <button id="checkout-btn" class="nav-button" >Оформление заказа</button>
+    <button id="profile-btn" class="nav-button" >Личный кабинет</button>
+    <button id="orders-btn" class="nav-button">История заказов</button>
+    <button id="stats-btn" class="nav-button" >Статистика продаж</button>
+  </header>
+  <main>
+    <section class="stats-chart-section">
+      <h2>График продаж</h2>
+      <canvas id="salesChart" width="800" height="400"></canvas>
+    </section>
+
+    <section class="stats-card">
+      <h2>Заказы</h2>
+      <p><strong>Количество заказов:</strong> <span id="orders-count"></span></p>
+      <p><strong>Общая стоимость заказов:</strong> <span id="orders-total"></span> ₽</p>
+    </section>
+
+    <section class="stats-card">
+      <h2>Продажи по товарам</h2>
+      <div id="product-sales"></div>
+    </section>
+
+    <section class="stats-card">
+      <h2>Пользователи</h2>
+      <div id="user-stats"></div>
+    </section>
+
+    <div class="visits-btn-container">
+      <button class="visits-btn">Статистика посещений</button>
+    </div>
+  </main>
+  <footer></footer>
+  <script src="/frontend.js"></script>
+  <script src="/stats.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

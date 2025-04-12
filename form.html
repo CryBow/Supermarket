@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Главная страница</title>
-  <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="/main_style.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/main_style.css">
 </head>
 <body>
   <header>
@@ -34,10 +34,18 @@
         <button id="login-btn" type="submit">Войти</button>
       </form>
     </div>
+    <div id="cookie-overlay" class="cookie-overlay">
+      <div id="cookie-consent-banner" class="cookie-banner">
+        <p>
+          Мы используем cookie для улучшения работы сайта. 
+          Продолжая пользоваться сайтом, вы соглашаетесь с 
+          <a href="privacy-policy" target="_blank">политикой конфиденциальности</a>.
+        </p>
+        <button id="accept-cookies">Принять</button>
+      </div>
+    </div>
   </main>
 
-  <footer>
-  </footer>
 
   <script src="/app.js"></script>
   <script src="/frontend.js"></script>

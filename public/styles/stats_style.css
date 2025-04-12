@@ -1,0 +1,124 @@
+main {
+    padding: 20px;
+    margin-top: 0px;
+}
+
+h1 {
+    color: #394871;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.stats-chart-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.stats-chart-section h2 {
+    color: #394871;
+}
+
+.stats-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+.stats-card h2 {
+    text-align: center;
+    color: #394871;
+    margin-bottom: 10px;
+}
+
+.stats-card .stats-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.stats-card .stats-row:last-child {
+    border-bottom: none;
+}
+
+#product-sales,
+#user-stats {
+    margin-top: 10px;
+}
+
+.visits-btn-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.visits-btn {
+    background-color: #394871;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.visits-btn:hover {
+    background-color: #2f3a58;
+}
+
+#orders-count,
+#orders-total {
+    display: inline-block;
+    padding: 10px 15px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #394871;
+    border-radius: 10px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    color: #394871;
+    font-weight: bold;
+}
+
+#product-sales p {
+    border: 1px solid #394871;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    color: #394871;
+    font-weight: bold;
+    text-align: center;
+}
+
+#user-stats table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    color: #394871;
+    font-weight: bold;
+}
+
+#user-stats th,
+#user-stats td {
+    border: 1px solid #394871;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+#user-stats th {
+    background-color: #f2f2f2;
+}

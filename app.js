@@ -1,10 +1,12 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const { Client } = require('pg');
 const app = express();
 const PORT = 3000;
 const session = require('express-session'); // Для работы с сессиями
+const LOG_FILE = path.join(__dirname, 'server', 'visits.log');
 
 
 // Настройка EJS
@@ -20,8 +22,11 @@ app.use(session({
   secret: 'x5y3z1', 
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 3600000 } // 1 час 
-  // cookie: { secure: false } // для разработки. В продакшене установите true
+  cookie: { 
+    maxAge: 3600000, // 1 час
+    httpOnly: true, // защита от XSS
+    sameSite: 'lax' // защита от CSRF
+  }
 }));
 
 
@@ -34,6 +39,15 @@ const dbConfig = {
   password: '1234',
   port: 5432,
 };
+
+
+app.use((req, res, next) => {
+  const logLine = `${new Date().toISOString()} ${req.method} ${req.url}\n`;
+  fs.appendFile(LOG_FILE, logLine, (err) => {
+      if (err) console.error('Ошибка записи в visits.log:', err);
+  });
+  next();
+});
 
 const client = new Client(dbConfig);
 client.connect()
@@ -49,6 +63,9 @@ app.get('/catalog', (req, res) => {
   res.sendFile(path.join(__dirname, 'catalog.html'));
 });
 
+app.get('/privacy-policy', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/privacy-policy.html'));
+});
 app.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname, "/form.html"));
 });
@@ -62,8 +79,29 @@ app.get("/cart", (req, res) => {
 });
 
 app.get("/checkout", (req, res) => {
-  res.sendFile(path.join(__dirname, "/checkout.html"));
+  res.sendFile(path.join(__dirname, "public/checkout.html"));
 });
+
+// Отдаём страницу со статистикой
+app.get('/visit-stats', (req, res) => {
+  res.sendFile(path.join(__dirname,  "public/visit-stats.html"));
+});
+
+// API для получения статистики (используется на странице)
+app.get('/api/visit-stats', async (req, res) => {
+  const { generateStats } = require('./server/generate-stats');
+  const stats = await generateStats();
+  res.json(stats);
+});
+
+app.get('/api/session-info', (req, res) => {
+  if (req.session.user) {
+    res.json({ authorized: true, name: req.session.user.name });
+  } else {
+    res.json({ authorized: false });
+  }
+});
+
 
 // API для получения данных профиля текущего пользователя
 app.get('/api/profile', (req, res) => {
@@ -104,6 +142,97 @@ app.get('/api/profile-orders', async (req, res) => {
   }
 });
 
+app.get('/api/orders', async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Пользователь не авторизован' });
+  }
+  
+  try {
+    const userId = req.session.user.id_Пользователя;
+    const ordersQuery = `
+      SELECT 
+        z."id_Заказа", 
+        z."Дата_создания", 
+        z."Статус_заказа", 
+        z."Стоимость_заказа",
+        COALESCE(SUM(ct."Количество"), 0) AS total_items
+      FROM "Заказы" z
+      LEFT JOIN "Корзина" k ON k."id_Заказа" = z."id_Заказа"
+      LEFT JOIN "Корзина_Товар" ct ON ct."id_Корзины" = k."id_Корзины"
+      WHERE z."id_Пользователя" = $1
+      GROUP BY z."id_Заказа", z."Дата_создания", z."Статус_заказа", z."Стоимость_заказа"
+      ORDER BY z."Дата_создания" DESC;
+    `;
+    
+    const result = await client.query(ordersQuery, [userId]);
+    console.log('История заказов для пользователя:', result.rows);
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Ошибка при получении заказов:', err);
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
+});
+
+app.get('/order-details/:id', async (req, res) => {
+  if (!req.session.user) {
+    return res.send(`
+      <script>
+        alert('Пользователь не авторизован!');
+        window.location.href = '/login';
+      </script>
+    `);
+  }
+  const orderId = req.params.id;
+  try {
+    // Получаем из базы данные заказа, включая товары
+    const orderQuery = `
+      SELECT 
+        z."id_Заказа", 
+        z."Дата_создания", 
+        z."Статус_заказа", 
+        z."Стоимость_заказа", 
+        u."Адрес"
+      FROM "Заказы" z
+      JOIN "Пользователь" u ON u."id_Пользователя" = z."id_Пользователя"
+      WHERE z."id_Заказа" = $1`;
+    const orderRes = await client.query(orderQuery, [orderId]);
+    const order = orderRes.rows[0];
+
+    // Получаем товары для этого заказа
+    const itemsQuery = `
+      SELECT 
+        t."id_Товара" AS id,
+        t."Название_товара" AS name,
+        t."Цена" AS price,
+        t."Изображение" AS image,
+        ct."Количество" AS quantity
+      FROM "Корзина_Товар" ct
+      JOIN "Товар" t ON t."id_Товара" = ct."id_Товара"
+      WHERE ct."id_Корзины" = (
+        SELECT k."id_Корзины" FROM "Корзина" k WHERE k."id_Заказа" = $1
+      )`;
+    const itemsRes = await client.query(itemsQuery, [orderId]);
+    const items = itemsRes.rows;
+    
+    // Формируем объект заказа с нужными данными
+    const orderDetails = {
+      id_Заказа: order.id_Заказа,
+      status: order.Статус_заказа,
+      total: order.Стоимость_заказа,
+      address: order.Адрес,
+      items: items
+    };
+
+    // Рендерим шаблон order-details.ejs
+    res.render('order-details', { order: orderDetails });
+  } catch (err) {
+    console.error('Ошибка при получении деталей заказа:', err);
+    res.status(500).send('Ошибка сервера');
+  }
+});
+
+
+
 // Страница профиля
 app.get('/profile', (req, res) => {
   if (!req.session.user) {
@@ -123,7 +252,7 @@ app.get("/orders", (req, res) => {
 });
 
 app.get("/stats", (req, res) => {
-  res.sendFile(path.join(__dirname, "/stats.html"));
+  res.sendFile(path.join(__dirname, "public/stats.html"));
 });
 
 app.use((req, res, next) => {
@@ -208,10 +337,8 @@ app.post('/register', async (req, res) => {
     ];
     const result = await client.query(query, params);
     console.log('Пользователь зарегистрирован:', result.rows[0]);
-    // Сохраняем пользователя в сессии
-    req.session.user = user;
-    console.log('Пользователь авторизован:', user);
-    res.sendFile(path.join(__dirname, "/form.html"));
+    console.log('Пользователь зарегистрирован:');
+    res.redirect('/login');
   } catch (err) {
     console.error('Ошибка при регистрации:', err);
     res.status(500).send({ error: 'Ошибка сервера при регистрации' });
@@ -329,7 +456,6 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-
 // API для добавления товара в корзину (используем куки для буферной корзины)
 app.post('/add-to-cart', (req, res) => {
   const { product } = req.body;
@@ -400,6 +526,80 @@ app.get('/product/:id', (req, res) => {
     res.render('product', { product });
   });
 });
+
+// Кол-во заказов и общая сумма
+app.get('/api/orders-stats', async (req, res) => {
+  const client = new Client(dbConfig);
+  await client.connect();
+  try {
+    const result = await client.query(`
+      SELECT COUNT(*) AS count, COALESCE(SUM("Стоимость_заказа"), 0) AS total 
+      FROM "Заказы";
+    `);
+    res.json({
+      count: parseInt(result.rows[0].count),
+      total: parseFloat(result.rows[0].total)
+    });
+  } catch (error) {
+    console.error('Ошибка при получении статистики заказов:', error);
+    res.status(500).json({ error: 'Ошибка сервера' });
+  } finally {
+    await client.end();
+  }
+});
+
+
+
+// Продажи по товарам
+app.get('/api/product-sales', async (req, res) => {
+  const client = new Client(dbConfig);
+  await client.connect();
+  try {
+    const result = await client.query(`
+      SELECT 
+        t."Название_товара" AS name,
+        COALESCE(SUM(kt."Количество"), 0) AS sold_quantity,
+        COALESCE(SUM(kt."Количество" * t."Цена"), 0) AS total_revenue
+      FROM "Товар" t
+      LEFT JOIN "Корзина_Товар" kt ON t."id_Товара" = kt."id_Товара"
+      GROUP BY t."Название_товара"
+      ORDER BY sold_quantity DESC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Ошибка при получении данных по продажам товаров:', error);
+    res.status(500).json({ error: 'Ошибка сервера' });
+  } finally {
+    await client.end();
+  }
+});
+
+
+
+// Статистика пользователей
+app.get('/api/user-stats', async (req, res) => {
+  const client = new Client(dbConfig);
+  await client.connect();
+  try {
+    const result = await client.query(`
+      SELECT 
+        u."id_Пользователя" AS id,
+        COUNT(z."id_Заказа") AS orders_count,
+        COALESCE(SUM(z."Стоимость_заказа"), 0) AS total_spent
+      FROM "Пользователь" u
+      LEFT JOIN "Заказы" z ON u."id_Пользователя" = z."id_Пользователя"
+      GROUP BY u."id_Пользователя"
+      ORDER BY total_spent DESC;
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Ошибка при получении статистики пользователей:', error);
+    res.status(500).json({ error: 'Ошибка сервера' });
+  } finally {
+    await client.end();
+  }
+});
+
 
 
 

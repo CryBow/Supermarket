@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Детали заказа №<%= order.id_Заказа %></title>
+  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="/styles/order_details_style.css">
+</head>
+<body>
+  <header>
+    <button id="home-btn" class="nav-button">Главная страница</button>
+    <button id="catalog-btn" class="nav-button">Каталог товаров</button>
+    <button id="cart-btn" class="nav-button">Корзина</button>
+    <button id="checkout-btn" class="nav-button">Оформление заказа</button>
+    <button id="profile-btn" class="nav-button">Личный кабинет</button>
+    <button id="orders-btn" class="nav-button">История заказов</button>
+    <button id="stats-btn" class="nav-button">Статистика заказов</button>
+  </header>
+  <main>
+    <button class="back-btn" onclick="window.history.back();">Назад</button>
+    <h1>Детали заказа №<%= order.id_Заказа %></h1>
+    
+    <div class="order-details">
+      <div class="order-items">
+        <% order.items.forEach(function(item) { %>
+          <div class="order-item-card">
+            <img src="/<%= item.image %>" alt="<%= item.name %>">
+            <div class="info">
+              <h2><%= item.name %></h2>
+              <p>Цена: <%= item.price %> ₽</p>
+              <p>Количество: <%= item.quantity %></p>
+              <p>Итого: <%= item.price * item.quantity %> ₽</p>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      
+      <div class="order-summary">
+        <p><strong>Общая стоимость:</strong> <%= order.total %> ₽</p>
+        <p><strong>Статус заказа:</strong> <%= order.status %></p>
+        <p><strong>Адрес доставки:</strong> <%= order.address %></p>
+      </div>
+    </div>
+  </main>
+  <footer></footer>
+  <script src="/frontend.js"></script>
+</body>
+</html>
