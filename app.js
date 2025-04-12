@@ -31,15 +31,16 @@ app.use(session({
 
 
 let isServerJustStarted = true;
-
+const connectionString = "postgresql://postgres:aUZhvJjOBbubjsawtzvWUpFztNRkyWUU@interchange.proxy.rlwy.net:39017/railway";
+  
 const dbConfig = {
   user: 'postgres',
   host: 'localhost',
   database: 'supermarket',
   password: '1234',
   port: 5432,
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
+  connectionString,
+ ssl: {
     rejectUnauthorized: false // Railway требует SSL, иначе ошибка подключения
   }
 };
