@@ -38,6 +38,10 @@ const dbConfig = {
   database: 'supermarket',
   password: '1234',
   port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false // Railway требует SSL, иначе ошибка подключения
+  }
 };
 
 
