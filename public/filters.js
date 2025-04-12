@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(products => {
         const container = document.querySelector('.product-grid');
-        container.innerHTML = ''; // Очищаем контейнер
+        container.innerHTML = ''; 
 
         products.forEach(product => {
           const card = document.createElement('div');
@@ -50,14 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="add-to-cart-btn">Добавить в корзину</button>
           `;
 
-          // При клике на карточку переходим на страницу товара
           card.addEventListener('click', e => {
             if (!e.target.classList.contains('add-to-cart-btn')) {
               window.location.href = `/product/${product['id_Товара']}`;
             }
           });
 
-          // Обработчик для кнопки "Добавить в корзину"
           const button = card.querySelector('.add-to-cart-btn');
           button.addEventListener('click', e => {
             e.stopPropagation();
@@ -78,13 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.error('Ошибка при загрузке товаров:', err));
   });
 
-  // Обработчик для кнопки "Сбросить фильтры"
   resetFiltersButton.addEventListener('click', () => {
     searchInput.value = '';
     sortSelect.value = 'asc';
-    categorySelect.value = ''; // Сброс категории на "Не выбрано"
+    categorySelect.value = ''; 
 
-    // Загружаем все товары без фильтров
     fetch('/api/products')
       .then(response => response.json())
       .then(products => {

@@ -28,23 +28,20 @@
         <option value="price-asc">Цена по возрастанию</option>
         <option value="price-desc">Цена по убыванию</option>
       </select>
-      
       <select id="category-select">
       </select>
-      
       <button id="apply-filters-btn" class="apply-filters-btn">Применить фильтры</button>
       <button id="reset-filters-btn" class="reset-filters-btn">Сбросить фильтры</button>
     </div>
-
-    <!-- Здесь будет список товаров, фильтры и сортировка -->
     <div id="product-container" class="product-grid">
-      <!-- карточки будут вставлены на сервере -->
       {{products}}
     </div>
   </main>
   <footer></footer>
   <script src="app.js"></script>
   <script src="catalog.js"></script>
+  <script src="/frontend.js"></script>
+  <script src="/cart.js"></script>
 
 </body>
 </html>

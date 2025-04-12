@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/auth_style.css">
+</head>
+<body>
+  <header>
+    <button id="home-btn" class="nav-button">Главная страница</button>
+    <button id="catalog-btn" class="nav-button">Каталог товаров</button>
+    <button id="cart-btn" class="nav-button">Корзина</button>
+    <button id="checkout-btn" class="nav-button">Оформление заказа</button>
+    <button id="profile-btn" class="nav-button">Личный кабинет</button>
+    <button id="orders-btn" class="nav-button">История заказов</button>
+    <button id="stats-btn" class="nav-button">Статистика продаж</button>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <h1>Регистрация</h1>
+      <form id="register-form" method="POST" action="/register">
+        <label for="last-name">Фамилия:</label>
+        <input type="text" id="last-name" name="lastName" required>
+
+        <label for="first-name">Имя:</label>
+        <input type="text" id="first-name" name="firstName" required>
+
+        <label for="middle-name">Отчество:</label>
+        <input type="text" id="middle-name" name="middleName">
+
+        <label for="gender">Пол:</label>
+        <select id="gender" name="gender" required>
+          <option value="" disabled selected>Выберите пол</option>
+          <option value="Мужской">Мужской</option>
+          <option value="Женский">Женский</option>
+        </select>
+
+        <label for="phone">Телефон:</label>
+        <input type="text" id="phone" name="phone" required>
+
+        <label for="register-email">Email:</label>
+        <input type="email" id="register-email" name="email" required>
+
+        <label for="address">Адрес:</label>
+        <textarea id="address" name="address" required></textarea>
+
+        <label for="register-password">Пароль:</label>
+        <input type="password" id="register-password" name="password" required>
+
+        <label for="birth-date">Дата рождения:</label>
+        <input type="date" id="birth-date" name="birthDate" required>
+
+        <button id="register-btn" class="register-button" type="submit">Зарегистрироваться</button>
+      </form>
+
+      <p>Уже зарегистрированы? <a href="/login">Войти</a></p>
+    </div>
+  </main>
+
+  <footer></footer>
+  <script src="/auth.js"></script>
+  <script src="app.js"></script>
+  <script src="/frontend.js"></script>
+</body>
+</html>
