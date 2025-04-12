@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // Настройка сессий
 app.use(session({
-  secret: 'x5y3z1', 
+  secret: process.env.SESSION_SECRET || 'secret',
   resave: false,
   saveUninitialized: false,
   cookie: { 
