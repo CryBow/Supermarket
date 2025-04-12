@@ -31,7 +31,7 @@ app.use(session({
 
 
 let isServerJustStarted = true;
-const connectionString = "postgresql://postgres:aUZhvJjOBbubjsawtzvWUpFztNRkyWUU@interchange.proxy.rlwy.net:39017/railway";
+const connectionString = "postgresql://postgres:aUZhvJjOBbubjsawtzvWUpFztNRkyWUU@postgres.railway.internal:5432/railway";
   
 const dbConfig = {
   user: 'postgres',
