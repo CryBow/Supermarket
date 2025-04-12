@@ -34,15 +34,21 @@ app.use(session({
 let isServerJustStarted = true;
 const connectionString = "postgresql://postgres:aUZhvJjOBbubjsawtzvWUpFztNRkyWUU@postgres.railway.internal:5432/railway";
   
+// const dbConfig = {
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'supermarket',
+//   password: '1234',
+//   port: 5432,
+//   connectionString,
+//  ssl: {
+//     rejectUnauthorized: false // Railway требует SSL, иначе ошибка подключения
+//   }
+// };
 const dbConfig = {
-  user: 'postgres',
-  host: 'localhost',
-  database: 'supermarket',
-  password: '1234',
-  port: 5432,
-  connectionString,
- ssl: {
-    rejectUnauthorized: false // Railway требует SSL, иначе ошибка подключения
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false // Railway требует SSL
   }
 };
 
