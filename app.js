@@ -7,6 +7,7 @@ const app = express();
 const PORT = 3000;
 const session = require('express-session'); // Для работы с сессиями
 const LOG_FILE = path.join(__dirname, 'server', 'visits.log');
+require('dotenv').config();
 
 
 // Настройка EJS
